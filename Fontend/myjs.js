@@ -68,12 +68,9 @@ $("#login").click(function(){
             sessionStorage.setItem("Email", $("#inputEamil").val());
             sessionStorage.setItem("Type",type.responseJSON);
 
-
-
             console.log(sessionStorage.getItem("Email"));
 
-
-            //window.location.href = "Admin/adminHome.html";
+            window.location.href = "Admin/adminHome.html";
 
             // console.log(Cookies.set('nameBloodDonationAZH', 3));
             // console.log(Cookies.get('nameBloodDonationAZH'));
@@ -85,19 +82,72 @@ $("#login").click(function(){
             sessionStorage.setItem("Email", $("#inputEamil").val());
             sessionStorage.setItem("Type",type.responseJSON);
             //window.location.href = "Admin/adminHome.html";
+           
         }
         else
         {
-            console.log("Faild");
+            $("#errorMsgLogin").html("Wrong Email or Password");
         }
         
     }
+    });
+});
+
+$("#submitContactUs").click(function(){
+
+        var validation = false;
+
+        if($("#EmailContactUs").val() != "" && $("#NameContactUs").val() != ""
+        && $("#MassageContactUs").val() != "" && $("#TypeContactUs").val() != ""){
+            validation = true;
+
+        }
+
+
+        if(validation == true){
+            $.ajax({
+                url:"https://localhost:44399/api/contactus",
+                method:"POST",
+                headers:"Content-Type:application/json",
+                data:{
+                    "Email":$("#EmailContactUs").val(),
+                    "Name":$("#NameContactUs").val(),
+                    "Massage":$("#MassageContactUs").val(),
+                    "Type":$("#TypeContactUs").val()
+                },
+                complete:function(xmlHttp,status){
+                    if(xmlHttp.status==200)
+                    {
+                        $("#msgContactUs").html("Thank You for Contact with Us!");
+                    }
+                    else
+                    {
+                        $("#msgContactUs").html(xmlHttp.status+":"+xmlHttp.statusText+": not sent!");
+                    }
+                }
+            });
+        }
+        else{
+            $("#msgContactUs").html("Please fill up all text box");
+        }
+      
 });
 
 
-});
+
+        
 
 });
+
+
+
+
+
+
+//Admin_____________________
+
+
+
 
 
 

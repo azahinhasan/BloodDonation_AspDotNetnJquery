@@ -60,5 +60,23 @@ namespace BloodDonation.Controllers
             return Json(type);
         }
 
+
+        [Route("api/contactus"), HttpPost]
+        public IHttpActionResult PostContactUs(contactU data)
+        {
+            var type = "none";
+            context.contactUs.Add(data);
+            context.SaveChanges();
+
+            return Json(type);
+        }
+
+        [Route("api/contactus"), HttpGet]
+        public IHttpActionResult GetContactUs()
+        {
+            return Ok(context.contactUs.ToList());
+        }
+
+
     }
 }

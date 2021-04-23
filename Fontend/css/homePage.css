@@ -1,6 +1,6 @@
 form{
     text-align: center;
-    width: 60%;
+    width: 50%;
     margin: auto;
     border: 2px solid rgb(0, 0, 0);
     padding: 5px;
@@ -8,4 +8,8 @@ form{
 
 nav{
     color: white;
+}
+
+.errorMsg{
+    color: red;
 }
