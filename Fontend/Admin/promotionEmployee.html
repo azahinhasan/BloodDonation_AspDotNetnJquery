@@ -5,8 +5,11 @@
 <head>
 
     <meta charset="">
+    <link rel="stylesheet" href="../css/homePage.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script type="text/javascript" src="../jquary.js"></script>
     <script type="text/javascript" src="../js/admin.js"></script>
+
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
@@ -26,19 +29,16 @@
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 		  <ul class="navbar-nav">
 			<li class="nav-item active">
-			  <a class="nav-link" href="adminHome.html">Home</a>
+			  <a class="nav-link" href="#">Home</a>
 			</li>
 			<li class="nav-item">
-			  <a class="nav-link" href="listEmployee.html">Employee List</a>
+			  <a class="nav-link" href="login.html">Login</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="promotionEmployee.html">Chnage Employee Type</a>
-			  </li>
-			<li class="nav-item">
-			  <a class="nav-link" href="addEmployee.html">Add Employee</a>
+			  <a class="nav-link" href="#">SignUp</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">Employee Salary</a>
+				<a class="nav-link" href="contactUs.html">Contact Us</a>
 			</li>
 		</ul>
 		</div>
@@ -47,8 +47,31 @@
 
 
 
-	<h1>Welcome to Admin Home Page!</h1>
 
+	
+	<div id="header"></div>
+	<form>
+		<h2>Search</h2>
+		<br/>
+		<input type="Email"  class="form-control" name="id" id="serachEamil" placeholder="ID">
+		<br/>
+
+		<button id="serachBtn" type="button" class="btn btn-primary">LOAD</button>
+		<br/>
+        <br/>
+        <div id="warningMsgChnageType" class="text-danger"></div>
+        <br/>
+        <table border="1" id="prmotionTable">
+            <tbody>
+                
+            </tbody>
+        </table>
+        <br/>
+
+        <button id="changeTypeBtn" type="button" class="btn btn-warning">CHANGE TYPE</button>
+	
+
+	</form>
 
 
 

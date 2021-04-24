@@ -12,4 +12,40 @@ nav{
 
 .errorMsg{
     color: red;
+ 
 }
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+}
+tr,td{
+    padding: 10px 10px;
+    text-align: left;
+}
+
+.Print{
+
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    text-align: center;
+
+    width: 450px;
+}
+
+.emailNDpass{
+    background-color: cornflowerblue;
+}
+
+
+@media print {
+    .noPrint{
+      display:none;
+
+    }
+  }
+  h1{
+    color:#f6f6;
+  }

@@ -26,14 +26,11 @@
 		<div class="collapse navbar-collapse" id="navbarNavDropdown">
 		  <ul class="navbar-nav">
 			<li class="nav-item active">
-			  <a class="nav-link" href="adminHome.html">Home</a>
+			  <a class="nav-link" href="#">Home</a>
 			</li>
 			<li class="nav-item">
-			  <a class="nav-link" href="listEmployee.html">Employee List</a>
+			  <a class="nav-link" href="#">Employee List</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="promotionEmployee.html">Chnage Employee Type</a>
-			  </li>
 			<li class="nav-item">
 			  <a class="nav-link" href="addEmployee.html">Add Employee</a>
 			</li>
@@ -47,7 +44,28 @@
 
 
 
-	<h1>Welcome to Admin Home Page!</h1>
+	<h2>Employee List</h2>
+	
+	<button id="loadbtn">Load Categories</button>
+	<br>
+	<p id="msg" style="color: red; font-weight: bold;"></p>
+	<br>
+	<table border="1" id="tblCategoryList">
+		<thead>
+			<tr>
+				<th>Name</th>
+                <th>Email</th>
+				<th>Phone</th>
+                <th>Address</th>
+				<th>DoB</th>
+                <th>Type</th>
+				<th>Action</th>
+			</tr>		
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
 
 
 

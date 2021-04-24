@@ -33,6 +33,15 @@ namespace BloodDonation.Models
             this.Salaries = new HashSet<Salary>();
         }
 
+        List<Link> links = new List<Link>();
+
+
+        public List<Link> Links
+        {
+            get { return links; }
+        }
+
+
         public int userID { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
