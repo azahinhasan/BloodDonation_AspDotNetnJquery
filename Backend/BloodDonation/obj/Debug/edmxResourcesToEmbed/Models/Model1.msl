@@ -115,6 +115,7 @@
     <EntitySetMapping Name="Salaries">
       <EntityTypeMapping TypeName="BloodDonationDBModel.Salary">
         <MappingFragment StoreEntitySet="Salary">
+          <ScalarProperty Name="Year" ColumnName="Year" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="January" ColumnName="January" />

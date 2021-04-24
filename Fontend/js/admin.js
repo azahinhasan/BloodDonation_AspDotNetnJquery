@@ -240,6 +240,111 @@ $(document).ready(function(){
         }
     });
     });
+
+
+
+    $("#loadSalaryBtn").click(function(){
+    
+        $.ajax({
+        url:"https://localhost:44399/api/salary",
+        method:"GET",
+        // headers:{
+        //     "Authorization":"Basic "+btoa("admin:123")
+        // },
+        complete:function(xmlHttp,status){
+            if(xmlHttp.status==200)
+            {
+                var str='';
+                var data=xmlHttp.responseJSON;
+
+                console.log(data);
+                
+                for (var i = 0; i < data.length; i++) {
+                    
+                    str+="<tr><td>"
+                    +data[i].userInfo.userID
+                    +"</td><td>"+data[i].userInfo.Name
+                    +"</td><td>"+data[i].January
+                    +"</td><td>"+data[i].February
+                    +"</td><td>"+data[i].March
+                    +"</td><td>"+data[i].April
+                    +"</td><td>"+data[i].May
+                    +"</td><td>"+data[i].June
+                    +"</td><td>"+data[i].July
+                    +"</td><td>"+data[i].August
+                    +"</td><td>"+data[i].September
+                    +"</td><td>"+data[i].October
+                    +"</td><td>"+data[i].November
+                    +"</td><td>"+data[i].December
+                    +"</td><td>"+data[i].Year
+                    +"</td></tr>";
+                }
+               
+
+                $("#tblSalaryList tbody").html(str);
+            }
+            else
+            {
+                $("#msg").html(xmlHttp.status+":"+xmlHttp.statusText);
+            }
+        }
+    });
+    });
+
+
+    $("#searchSalary").click(function(){
+    
+        $.ajax({
+        url:"https://localhost:44399/api/salary/"+$("#inputIDsalary").val(),
+        method:"GET",
+        // headers:{
+        //     "Authorization":"Basic "+btoa("admin:123")
+        // },
+        complete:function(xmlHttp,status){
+            if(xmlHttp.status==200)
+            {
+                var str='';
+                var data=xmlHttp.responseJSON;
+
+                if(data != null){
+                    for (var i = 0; i < data.length; i++) {
+                    
+                        str+="<tr><td>"
+                        +data[i].userInfo.userID
+                        +"</td><td>"+data[i].userInfo.Name
+                        +"</td><td>"+data[i].January
+                        +"</td><td>"+data[i].February
+                        +"</td><td>"+data[i].March
+                        +"</td><td>"+data[i].April
+                        +"</td><td>"+data[i].May
+                        +"</td><td>"+data[i].June
+                        +"</td><td>"+data[i].July
+                        +"</td><td>"+data[i].August
+                        +"</td><td>"+data[i].September
+                        +"</td><td>"+data[i].October
+                        +"</td><td>"+data[i].November
+                        +"</td><td>"+data[i].December
+                        +"</td><td>"+data[i].Year
+                        +"</td></tr>";
+                    }
+    
+                    
+                }else{
+                    $("#msgSalarySearchError").html("Data not FOUND!");
+                }
+
+                $("#tblSalaryList tbody").html(str);
+
+            }
+                
+                
+            else
+            {
+                $("#msgSalarySearchError").html("Data not FOUND!");
+            }
+        }
+    });
+    });
     
 
     

@@ -28,6 +28,7 @@ namespace BloodDonation.Models
         public string October { get; set; }
         public string November { get; set; }
         public string December { get; set; }
+        public Nullable<int> Year { get; set; }
     
         public virtual userInfo userInfo { get; set; }
     }

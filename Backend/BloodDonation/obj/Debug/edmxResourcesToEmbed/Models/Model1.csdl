@@ -136,6 +136,7 @@
     <Property Name="November" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="December" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="userInfo" Relationship="Self.FK_Salary_userInfo" FromRole="Salary" ToRole="userInfo" />
+    <Property Name="Year" Type="Int32" />
   </EntityType>
   <EntityType Name="userInfo">
     <Key>

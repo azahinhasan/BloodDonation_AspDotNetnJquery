@@ -35,6 +35,7 @@ namespace BloodDonation.Controllers
                 context.userInfoes.Add(info);
                 context.SaveChanges();
                 infoSalary.UserId = info.userID;
+                infoSalary.Year = 2021;
                 context.Salaries.Add(infoSalary);
                 context.SaveChanges();
                 return Json(info.Password);
@@ -100,6 +101,27 @@ namespace BloodDonation.Controllers
             return Ok(data);
         }
 
+
+        [Route("api/salary"), HttpGet]
+        public IHttpActionResult Getsalery()
+        {
+
+            //bool data = context.userInfoes.Any(x => x.Email == user.Email && x.Password == user.Password);
+            var data = context.Salaries.ToList();
+
+            return Ok(data);
+        }
+
+        [Route("api/salary/{id}"), HttpGet]
+        public IHttpActionResult GetsaleryID([FromUri]int id)
+        {
+
+            //bool data = context.userInfoes.Any(x => x.Email == user.Email && x.Password == user.Password);
+            var data = context.Salaries.Where(x => x.UserId == id).ToList();
+           
+
+            return Ok(data);
+        }
 
     }
 }

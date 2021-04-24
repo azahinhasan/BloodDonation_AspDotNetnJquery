@@ -19,7 +19,8 @@ table{
     margin-left: auto;
     margin-right: auto;
 }
-tr,td{
+tr,td,th{
+    border: 1px solid black;
     padding: 10px 10px;
     text-align: left;
 }
@@ -48,4 +49,10 @@ tr,td{
   }
   h1{
     color:#f6f6;
+  }
+
+  .bodyData{
+      text-align: center;
+      display: block;
+
   }
