@@ -53,7 +53,7 @@ $("#login").click(function(){
 
    
     $.ajax({
-    url:"https://localhost:44399/api/login",
+    url:"http://localhost:4747/api/login",
     method:"POST",
     headers:"Content-Type:application/json",
     data:{
@@ -63,7 +63,7 @@ $("#login").click(function(){
     complete:function(type){
         console.log(type);
 
-        if(type.responseJSON=="Admin")
+        if(type.responseJSON=="Admin" || type.responseJSON=="Moderator")
         {
             sessionStorage.setItem("Email", $("#inputEamil").val());
             sessionStorage.setItem("Type",type.responseJSON);
@@ -82,7 +82,7 @@ $("#login").click(function(){
             sessionStorage.setItem("Email", $("#inputEamil").val());
             sessionStorage.setItem("Type",type.responseJSON);
             //window.location.href = "Admin/adminHome.html";
-           
+        
         }
         else
         {
@@ -106,7 +106,7 @@ $("#submitContactUs").click(function(){
 
         if(validation == true){
             $.ajax({
-                url:"https://localhost:44399/api/contactus",
+                url:"http://localhost:4747/api/contactus",
                 method:"POST",
                 headers:"Content-Type:application/json",
                 data:{

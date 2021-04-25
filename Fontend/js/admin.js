@@ -28,7 +28,7 @@ $(document).ready(function(){
 
 
                     $.ajax({
-                        url:"https://localhost:44399/api/employee",
+                        url:"http://localhost:4747/api/employee",
                         method:"POST",
                         headers:"Content-Type:application/json",
                         data:{
@@ -118,11 +118,13 @@ $(document).ready(function(){
         console.log("prom");
     }
 
+    employeeList();
+   //$("#loadbtn").click(function(){
 
-    $("#loadbtn").click(function(){
+    function employeeList(){
     
         $.ajax({
-        url:"https://localhost:44399/api/employee",
+        url:"http://localhost:4747/api/employee",
         method:"GET",
         // headers:{
         //     "Authorization":"Basic "+btoa("admin:123")
@@ -161,7 +163,7 @@ $(document).ready(function(){
 
    
         $.ajax({
-        url:"https://localhost:44399/api/employee/"+$("#serachEamil").val(),
+        url:"http://localhost:4747/api/employee/"+$("#serachEamil").val(),
         method:"GET",
         headers:"Content-Type:application/json",
         complete:function(xmlHttp,status){
@@ -171,7 +173,7 @@ $(document).ready(function(){
                 var data=xmlHttp.responseJSON;
 
                     if(data.Name != null){
-                        sessionStorage.setItem("actionOFemployee", data.userID);
+                        sessionStorage.setItem("actionOFemployee", data.userId);
                         str+="<tr><td>Name: "
                         +data.Name
                         +"</td><tr><td>Phone: "+data.Phone
@@ -200,7 +202,7 @@ $(document).ready(function(){
     $("#changeTypeBtn").click(function(){
     
         $.ajax({
-        url:"https://localhost:44399/api/employeeTypeChange/"+sessionStorage.getItem("actionOFemployee"),
+        url:"http://localhost:4747/api/employeeTypeChange/"+sessionStorage.getItem("actionOFemployee"),
         method:"GET",
         headers:"Content-Type:application/json",
         // data:{
@@ -213,7 +215,7 @@ $(document).ready(function(){
                 var data=xmlHttp.responseJSON;
 
                     if(data.Name != null){
-                        sessionStorage.setItem("actionOFemployee", data.userID);
+                        sessionStorage.setItem("actionOFemployee", data.userId);
                         str+="<tr><td>Name: "
                         +data.Name
                         +"</td><tr><td>Phone: "+data.Phone
@@ -246,7 +248,7 @@ $(document).ready(function(){
     $("#loadSalaryBtn").click(function(){
     
         $.ajax({
-        url:"https://localhost:44399/api/salary",
+        url:"http://localhost:4747/api/salary",
         method:"GET",
         // headers:{
         //     "Authorization":"Basic "+btoa("admin:123")
@@ -262,7 +264,7 @@ $(document).ready(function(){
                 for (var i = 0; i < data.length; i++) {
                     
                     str+="<tr><td>"
-                    +data[i].userInfo.userID
+                    +data[i].userInfo.userId
                     +"</td><td>"+data[i].userInfo.Name
                     +"</td><td>"+data[i].January
                     +"</td><td>"+data[i].February
@@ -295,7 +297,7 @@ $(document).ready(function(){
     $("#searchSalary").click(function(){
     
         $.ajax({
-        url:"https://localhost:44399/api/salary/"+$("#inputIDsalary").val(),
+        url:"http://localhost:4747/api/salary/"+$("#inputIDsalary").val(),
         method:"GET",
         // headers:{
         //     "Authorization":"Basic "+btoa("admin:123")
