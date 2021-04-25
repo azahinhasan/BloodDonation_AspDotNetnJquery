@@ -1,4 +1,33 @@
+
+
+
+
+
+
 $(document).ready(function(){
+
+    $(function() {  //run with page load
+        console.log("AutoLoad");
+        employeeList();
+        $("#paymentPart").hide();
+    });
+
+
+
+
+    //function printPage(){
+        $("#printThePage").click(function(){
+            console.log($("#addEmployeeName").val()+" p")
+    
+            $("#emailPrint").html(sessionStorage.getItem("printEmail"));
+            $("#namePrint").html(sessionStorage.getItem("printName"));
+            $("#typePrint").html(sessionStorage.getItem("printType"));
+            $("#phonePrint").html(sessionStorage.getItem("printPhone"));
+            $("#salaryPrint").html(sessionStorage.getItem("printSalary"));
+            $("#passwordPrint").html(sessionStorage.getItem("printPass"));
+    
+        });
+        //}
 
     $("#addEmployeeBtn").click(function(){
     
@@ -69,6 +98,7 @@ $(document).ready(function(){
                                 sessionStorage.setItem("printPass",type.responseJSON);
                                 
                                 window.location.href = "printPage.html";
+                               
                             }
                         }
                     });
@@ -99,30 +129,14 @@ $(document).ready(function(){
 
 
 
-    $("#printThePage").click(function(){
-
-        console.log($("#addEmployeeName").val()+" p")
-
-        $("#emailPrint").html(sessionStorage.getItem("printEmail"));
-        $("#namePrint").html(sessionStorage.getItem("printName"));
-        $("#typePrint").html(sessionStorage.getItem("printType"));
-        $("#phonePrint").html(sessionStorage.getItem("printPhone"));
-        $("#salaryPrint").html(sessionStorage.getItem("printSalary"));
-        $("#passwordPrint").html(sessionStorage.getItem("printPass"));
-
-    });
+ 
 
 
 
-    function promotion(){
-        console.log("prom");
-    }
-
-    employeeList();
-   //$("#loadbtn").click(function(){
 
     function employeeList(){
-    
+   // $("#loadbtn").click(function(){
+
         $.ajax({
         url:"http://localhost:4747/api/employee",
         method:"GET",
@@ -135,7 +149,7 @@ $(document).ready(function(){
                 var str='';
                 var data=xmlHttp.responseJSON;
                 for (var i = 0; i < data.length; i++) {
-                    
+                
                     str+="<tr><td>"
                     +data[i].Name
                     +"</td><td>"+data[i].Phone
@@ -143,7 +157,6 @@ $(document).ready(function(){
                     +"</td><td>"+data[i].Address
                     +"</td><td>"+data[i].DOB
                     +"</td><td>"+data[i].Type
-                    +"</td><td><button onclick="+promotion()+"></button>"
                     +"</td></tr>";
                 }
 
@@ -155,7 +168,10 @@ $(document).ready(function(){
             }
         }
     });
-    });
+   //});  
+
+}
+
 
 
 
@@ -173,6 +189,8 @@ $(document).ready(function(){
                 var data=xmlHttp.responseJSON;
 
                     if(data.Name != null){
+                        
+
                         sessionStorage.setItem("actionOFemployee", data.userId);
                         str+="<tr><td>Name: "
                         +data.Name
@@ -262,7 +280,8 @@ $(document).ready(function(){
                 console.log(data);
                 
                 for (var i = 0; i < data.length; i++) {
-                    
+                    $("#paymentPart").hide();
+
                     str+="<tr><td>"
                     +data[i].userInfo.userId
                     +"</td><td>"+data[i].userInfo.Name
@@ -281,8 +300,6 @@ $(document).ready(function(){
                     +"</td><td>"+data[i].Year
                     +"</td></tr>";
                 }
-               
-
                 $("#tblSalaryList tbody").html(str);
             }
             else
@@ -308,11 +325,14 @@ $(document).ready(function(){
                 var str='';
                 var data=xmlHttp.responseJSON;
 
-                if(data != null){
+                console.log(data);
+                if(data.length > 0){
+                    $("#msgSalarySearchError").html("");
+                    $("#paymentPart").show();
                     for (var i = 0; i < data.length; i++) {
-                    
+                        
                         str+="<tr><td>"
-                        +data[i].userInfo.userID
+                        +data[i].userInfo.userId
                         +"</td><td>"+data[i].userInfo.Name
                         +"</td><td>"+data[i].January
                         +"</td><td>"+data[i].February
@@ -332,11 +352,11 @@ $(document).ready(function(){
     
                     
                 }else{
+                    $("#paymentPart").hide();
                     $("#msgSalarySearchError").html("Data not FOUND!");
                 }
 
                 $("#tblSalaryList tbody").html(str);
-
             }
                 
                 
@@ -347,6 +367,69 @@ $(document).ready(function(){
         }
     });
     });
+
+
+    function payMentDone(action){
+        $.ajax({
+            url:"http://localhost:4747/api/salary/"+$("#inputIDsalary").val()+"/"+$("#payMonthName").val()+"/"+$("#payYearhName").val()+"/"+action,
+            method:"POST",
+            headers:"Content-Type:application/json",
+            complete:function(xmlHttp,status){
+                if(xmlHttp.status==200)
+                {
+                    var str='';
+                    var data=xmlHttp.responseJSON;
+    
+                    console.log(data.February);
+                    if(data != null){    
+                    
+                            str+="<tr><td>"
+                            +data.userInfo.userId
+                            +"</td><td>"+data.userInfo.Name
+                            +"</td><td>"+data.January
+                            +"</td><td>"+data.February
+                            +"</td><td>"+data.March
+                            +"</td><td>"+data.April
+                            +"</td><td>"+data.May
+                            +"</td><td>"+data.June
+                            +"</td><td>"+data.July
+                            +"</td><td>"+data.August
+                            +"</td><td>"+data.September
+                            +"</td><td>"+data.October
+                            +"</td><td>"+data.November
+                            +"</td><td>"+data.December
+                            +"</td><td>"+data.Year
+                            +"</td></tr>";
+                        
+                        $("#payMsg").html("Salary Updated!");
+                    }else{
+                        $("#payMsg").html("Data not FOUND!");
+                    }
+    
+                    $("#tblSalaryList tbody").html(str);
+                }
+                    
+                    
+                else
+                {
+                    $("#payMsg").html("Data not Found!");
+                }
+            }
+        });
+    }
+
+
+
+    $("#payBtn").click(function(){
+        payMentDone("yes");
+      
+    });
+
+    $("#cenclePayBtn").click(function(){
+        payMentDone("no");
+      
+    });
+    
     
 
     

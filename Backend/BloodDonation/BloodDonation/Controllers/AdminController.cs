@@ -117,5 +117,145 @@ namespace BloodDonation.Controllers
             return Ok(data);
         }
 
+        [Route("api/salary/{id}/{month}/{year}/{add}"), HttpPost]
+        public IHttpActionResult Paysalery([FromUri]int id, [FromUri] string month, [FromUri] int year, [FromUri] string add)
+        {
+            var data = context.Salaries.Where(x => x.userId == id && x.Year == year).FirstOrDefault<Salary>();
+
+            if (data == null)
+            {
+                Salary infoSalary = new Salary();
+
+                infoSalary.userId = id;
+                infoSalary.Year = year;
+                context.Salaries.Add(infoSalary);
+                context.SaveChanges();
+                data = context.Salaries.Where(x => x.userId == id && x.Year == year).FirstOrDefault<Salary>();
+
+            }
+
+            if (add == "yes")
+            {
+                if (month == "January")
+                {
+                    data.January = "yes";
+                }
+                if (month == "February")
+                {
+                    data.February = "yes";
+                }
+                if (month == "March")
+                {
+                    data.March = "yes";
+                }
+                if (month == "April")
+                {
+                    data.April = "yes";
+                }
+                if (month == "May")
+                {
+                    data.May = "yes";
+                }
+                if (month == "June")
+                {
+                    data.June = "yes";
+                }
+                if (month == "July")
+                {
+                    data.July = "yes";
+
+                }
+                if (month == "August")
+                {
+                    data.August = "yes";
+                }
+                if (month == "September")
+                {
+                    data.September = "yes";
+                }
+                if (month == "October")
+                {
+                    data.October = "yes";
+
+                }
+                if (month == "November")
+                {
+                    data.November = "yes";
+
+                }
+                if (month == "December")
+                {
+                    data.December = "yes";
+
+                }
+
+            }
+            if (add == "no")
+            {
+                if (month == "January")
+                {
+                    data.January = "no";
+                }
+                if (month == "February")
+                {
+                    data.February = "no";
+                }
+                if (month == "March")
+                {
+                    data.March = "no";
+                }
+                if (month == "April")
+                {
+                    data.April = "no";
+                }
+                if (month == "May")
+                {
+                    data.May = "no";
+                }
+                if (month == "June")
+                {
+                    data.June = "no";
+                }
+                if (month == "July")
+                {
+                    data.July = "no";
+
+                }
+                if (month == "August")
+                {
+                    data.August = "no";
+                }
+                if (month == "September")
+                {
+                    data.September = "no";
+                }
+                if (month == "October")
+                {
+                    data.October = "no";
+
+                }
+                if (month == "November")
+                {
+                    data.November = "no";
+
+                }
+                if (month == "December")
+                {
+                    data.December = "no";
+
+                }
+
+            }
+
+
+            //
+
+            context.Entry(data).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+
+
+            return Ok(data);
+        }
+
     }
 }

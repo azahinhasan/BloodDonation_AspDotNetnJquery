@@ -56,3 +56,9 @@ tr,td,th{
       display: block;
 
   }
+
+  #paymentPart{
+
+      
+      margin: 10% 30%;
+  }

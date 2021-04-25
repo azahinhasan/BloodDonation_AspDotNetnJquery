@@ -43,6 +43,7 @@
 
 
 
+
     <div class="bodyData">
 
 	<h2>Employee Salary List</h2>
@@ -53,7 +54,7 @@
 
 
 	<button id="loadSalaryBtn" class="btn btn-info">Load All Datas</button>
-	<br>
+	<br/><br/>
 	<p id="msgSalarySearchError" style="color: red; font-weight: bold;"></p>
 	<br/>
   
@@ -61,7 +62,7 @@
 	<table border="1" id="tblSalaryList">
 		<thead class="thead-dark">
 			<tr>
-                <th>ID</th>
+                <th>UserID</th>
                 <th>Name</th>
 				<th>January</th>
                 <th>February</th>
@@ -84,7 +85,35 @@
 		</tbody>
 	</table>
 
-
+	<div id="paymentPart">
+		<h3>Make Payment</h3>
+		<p id="payMsg" class="text-primary"></p>
+		<label>Month:</label>
+		<select name="Month" id="payMonthName" class="form-control">
+			<option value='January'>January</option>
+			<option value='February'>February</option>
+			<option value='March'>March</option>
+			<option value='April'>April</option>
+			<option value='May'>May</option>
+			<option value='June'>June</option>
+			<option value='July'>July</option>
+			<option value='August'>August</option>
+			<option value='September'>September</option>
+			<option value='October'>October</option>
+			<option value='November'>November</option>
+			<option value='December'>December</option>
+		</select>
+		<label>Year:</label>
+		<select name="Month" id="payYearhName" class="form-control">
+			<option value='2021'>2021</option>
+			<option value='2022'>2022</option>
+			<option value='2023'>2023</option>
+		</select>
+		<br/>
+		<br/>
+		<button id="payBtn" class="btn btn-success">PAY</button>
+		<button id="cenclePayBtn" class="btn btn-danger">CANCEL</button>
+	</div>
 </div>
 
 </body>
