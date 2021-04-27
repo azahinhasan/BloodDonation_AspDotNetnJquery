@@ -257,5 +257,40 @@ namespace BloodDonation.Controllers
             return Ok(data);
         }
 
+
+
+        [Route("api/StatisticsAllUser"), HttpGet]
+        public IHttpActionResult StatisticsAllUser()
+        {
+
+            var data = context.Userinfos.Where(r => r.Type == "Admin").ToList();
+            int adminCount = data.Count;
+            data = context.Userinfos.Where(r => r.Type == "Moderator").ToList();
+            int ModeratorCount = data.Count;
+            data = context.Userinfos.Where(r => r.Type == "Donner").ToList();
+            int DonerCount = data.Count;
+            data = context.Userinfos.Where(r => r.Type == "User").ToList();
+            int UserCount = data.Count;
+            
+            int[] myNum = { adminCount, ModeratorCount, UserCount, DonerCount };
+
+            return Ok(myNum);
+        }
+
+        [Route("api/StatisticsAllBanUser"), HttpGet]
+        public IHttpActionResult StatisticsAllBanUser()
+        {
+
+            var data = context.Userinfos.ToList();
+            int TotalUserCount = data.Count;
+            var data2 = context.bannedUsers.ToList();
+            int BanUserCount = data2.Count;
+            int notBanUserCount = TotalUserCount - BanUserCount;
+
+            int[] myNum = { TotalUserCount, notBanUserCount, BanUserCount };
+
+            return Json(myNum);
+        }
+
     }
 }

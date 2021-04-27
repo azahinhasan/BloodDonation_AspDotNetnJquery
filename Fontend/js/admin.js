@@ -9,6 +9,7 @@ $(document).ready(function(){
     $(function() {  //run with page load
         console.log("AutoLoad");
         employeeList();
+        loadReports();
         $("#paymentPart").hide();
     });
 
@@ -149,17 +150,19 @@ $(document).ready(function(){
                 var str='';
                 var data=xmlHttp.responseJSON;
                 for (var i = 0; i < data.length; i++) {
-                
-                    str+="<tr><td>"
-                    +data[i].Name
+                    str+="<tr><td>"+
+                    //'<img src="../../Backend/BloodDonation/Content/img/'+data[i].ProPic+'" width="75px" height="80px"></img>'
+                    '<img src="../img/'+data[i].ProPic+'" width="75px" height="80px"></img>'
+                    +"</td><td>"+data[i].Name
                     +"</td><td>"+data[i].Phone
                     +"</td><td>"+data[i].Email
                     +"</td><td>"+data[i].Address
                     +"</td><td>"+data[i].DOB
                     +"</td><td>"+data[i].Type
-                    +"</td></tr>";
+                  
+                    +"</td></td>";
                 }
-
+//"<img src=."+/img/arguments.png+">" 
                 $("#tblCategoryList tbody").html(str);
             }
             else
@@ -429,6 +432,38 @@ $(document).ready(function(){
         payMentDone("no");
       
     });
+
+
+    function loadReports(){
+        $.ajax({
+            url:"http://localhost:4747/api/allReports",
+            method:"GET",
+            headers:"Content-Type:application/json",
+            complete:function(xmlHttp,status){
+                if(xmlHttp.status==200)
+                {
+                    var str='';
+                    var data=xmlHttp.responseJSON;
+                    console.log(data);
+                    if(data != null){    
+                        for (var i = 0; i < data.length; i++) {        
+                        str+="<tr><td>"
+                        +data[i].Report1
+                        +"</td><td>"+data[i].userinfo_userId
+                        +"</td><td>"+data[i].UserID
+                        +"</td></tr>";
+                        }
+                    }
+                    $("#tblReportList tbody").html(str);
+                }
+                
+                else
+                {
+                    $("#payMsg").html("Data not Found!");
+                }
+            }
+        });
+    }
     
     
 
