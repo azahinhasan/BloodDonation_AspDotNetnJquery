@@ -47,6 +47,17 @@
 
 $(document).ready(function(){
 
+    $(function() { 
+        
+       
+        if(localStorage.getItem("Email") != null){
+           
+            if(localStorage.getItem("TypeForAcess") == "AdmNDmod"){
+                //$("#errorMsgLogin").html("Have to Login Fast");
+                window.location.href = "./Admin/adminHome.html";
+            }
+        }
+    });
 
 
 $("#login").click(function(){
@@ -72,6 +83,14 @@ $("#login").click(function(){
 
             window.location.href = "Admin/adminHome.html";
 
+
+            localStorage.setItem("Email", $("#inputEamil").val());
+            localStorage.setItem("TypeForAcess", "AdmNDmod");
+
+
+
+            // document.cookie = "Email="+$("#inputEamil").val();
+            // alert(document.cookie);
             // console.log(Cookies.set('nameBloodDonationAZH', 3));
             // console.log(Cookies.get('nameBloodDonationAZH'));
            // window.location.href="Admin/adminHome.html";

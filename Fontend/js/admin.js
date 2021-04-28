@@ -7,12 +7,36 @@
 $(document).ready(function(){
 
     $(function() {  //run with page load
+        
+
+        if(localStorage.getItem("Email") == null){
+            //$("#errorMsgLogin").html("Have to Login Fast");
+            window.location.href = "../index.html";
+        }
+        else if(localStorage.getItem("TypeForAcess") != "AdmNDmod"){
+            //$("#errorMsgLogin").html("Have to Login Fast");
+            window.location.href = "../index.html";
+        }
+        else{
+            loadAllDatas();
+        }
+    });
+
+    function loadAllDatas(){
         console.log("AutoLoad");
         employeeList();
         loadReports();
         contactUsLoad();
         $("#paymentPart").hide();
         $("#banUserPart").hide();
+    }
+
+
+    $("#LogOut").click(function(){
+        localStorage.removeItem("Email");
+        localStorage.removeItem("TypeForAcess");
+        sessionStorage.clear();  
+       // window.location.href = "../index.html";
     });
 
 
@@ -649,4 +673,14 @@ $("#banUnbanBtn").click(function(){
             }
         });
     });
+
+
+
+
+
+
+
+
+
+
 });
