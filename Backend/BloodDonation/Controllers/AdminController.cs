@@ -283,7 +283,7 @@ namespace BloodDonation.Controllers
 
             var data = context.Userinfos.ToList();
             int TotalUserCount = data.Count;
-            var data2 = context.bannedUsers.ToList();
+            var data2 = context.Userinfos.Where(x=> x.BanStatus == "yes").ToList();
             int BanUserCount = data2.Count;
             int notBanUserCount = TotalUserCount - BanUserCount;
 
@@ -300,11 +300,40 @@ namespace BloodDonation.Controllers
             return Ok(data);
         }
 
-        [Route("api/banUser/{id}"), HttpPost]
-        public IHttpActionResult banUser(int id)
+        [Route("api/banUserInfo/{id}"), HttpGet]
+        public IHttpActionResult banUserInfo(int id)
         {
 
-            var data = context.reports.ToList();
+            var data = context.Userinfos.Where(x=> x.userId == id).FirstOrDefault<userinfo>();
+
+            return Ok(data);
+        }
+
+        [Route("api/banUnbanUser/{id}"), HttpPost]
+        public IHttpActionResult banUser(int id)
+        {
+            var data = context.Userinfos.Where(x => x.userId == id).FirstOrDefault<userinfo>();
+
+            if (data.BanStatus=="yes")
+            {
+                data.BanStatus = "no";
+            }
+            else
+            {
+                data.BanStatus = "yes";
+            }
+
+            context.Entry(data).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+
+            return Ok(data);
+        }
+
+        [Route("api/contactUsList"), HttpGet]
+        public IHttpActionResult contactUsList()
+        {
+
+            var data = context.contactUs.ToList();
 
             return Ok(data);
         }

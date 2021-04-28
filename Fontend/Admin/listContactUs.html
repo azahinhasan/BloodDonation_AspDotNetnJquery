@@ -52,24 +52,26 @@
 
 
 
-
-	<h2>Employee List</h2>
+	<h2>Contact us List</h2>
 	
-	<!-- <button id="loadbtn">Load Categories</button> -->
 	<br>
-	<p id="msg" style="color: red; font-weight: bold;"></p>
-	<br>
-	<table border="1" id="tblCategoryList" class="table">
+	    <label>Filter:</label>
+		<select name="Month" id="filterContactUsDropdown" class="form-control">
+			<option value='Banned Problems'>Banned Problems</option>
+			<option value='Feedback'>Feedback</option>
+			<option value='Other'>Other</option>
+		</select>
+        <br/>
+        <button id="filterContactUsBtn" class="btn btn-info">Filter</button>
+        <br/><br/>
+	<table border="1" id="tblContactUsList" class="table">
 		<thead>
 			<tr>
-				
-				<th>ProPic</th>
+				<th>Email</th>
 				<th>Name</th>
-                <th>Email</th>
-				<th>Phone</th>
-                <th>Address</th>
-				<th>DoB</th>
-                <th>Type</th>
+                <th>Text</th>
+                <th>Category</th>
+                <th>Replay</th>
 			</tr>		
 		</thead>
 		<tbody>
@@ -77,8 +79,8 @@
 		</tbody>
 	</table>
 
-
-
+	<br/>
+	
 
 </body>
 </html>

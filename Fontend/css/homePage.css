@@ -74,3 +74,7 @@ tr,td,th{
     position: relative;
     margin: 0% 25%;
    }
+
+   body{
+       text-align: center;
+   }
