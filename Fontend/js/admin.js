@@ -502,8 +502,11 @@ $(document).ready(function(){
     
 
     $("#searchFORbanBtn").click(function(){
-        let temp = 0;
+        let temp = 1;
         $("#serachErrorReports").html("");
+        let check = parseInt($("#searchFORban").val());
+
+        if(!isNaN(check)){
         $.ajax({
         url:"http://localhost:4747/api/allReports",
         method:"GET",
@@ -530,6 +533,7 @@ $(document).ready(function(){
                     else{
                         $("#serachErrorReports").html("");
                         $("#tblReportList tbody").html(str);
+                        console.log($("#searchFORban").val());
                         banUserInfoLoad($("#searchFORban").val());
                     }
 
@@ -543,7 +547,46 @@ $(document).ready(function(){
             }
         }
     });
-    });
+
+    }
+    else{
+
+
+        $.ajax({
+            url:"http://localhost:4747/api/allReportsByEmail/"+$("#searchFORban").val()+"/",
+            method:"GET",
+            complete:function(xmlHttp,status){
+                if(xmlHttp.status==200)
+                {
+                    var str='';
+                    var data=xmlHttp.responseJSON;
+                    if(data.length > 0){
+                        for (var i = 0; i < data.length; i++) {
+                                str+="<tr><td>"
+                                +data[i].Report1
+                                +"</td><td>"+data[i].DonorID
+                                +"</td><td>"+data[i].UserID
+                                +"</td></tr>";
+                        }
+
+                        $("#serachErrorReports").html("");
+                        $("#tblReportList tbody").html(str);
+                        console.log($("#searchFORban").val());
+                        banUserInfoLoad($("#searchFORban").val());
+    
+                    }
+        
+                }
+    
+                else
+                {
+                    $("#serachErrorReports").html("No Data Found!");
+                }
+            }
+        });
+    }
+
+});
     
 
 
@@ -551,54 +594,114 @@ $(document).ready(function(){
 function banUserInfoLoad(value){
     $("#BanUnbanMsg").html("");
     $("#banUserPart").show();
-    $.ajax({
-        url:"http://localhost:4747/api/banUserInfo/"+value,
-        method:"GET",
-        complete:function(xmlHttp,status){
-            if(xmlHttp.status==200)
-            {
-                var str='';
-                var data=xmlHttp.responseJSON;
-                if(data != null){    
+    var data='';
+    var str='';
+    let temp = parseInt(value);
+
+    if(!isNaN(temp)){
+        $.ajax({
+            url:"http://localhost:4747/api/banUserInfo/"+value,
+            method:"GET",
+            complete:function(xmlHttp,status){
+                if(xmlHttp.status==200)
+                { 
+                    data=xmlHttp.responseJSON;
+                    if(data != null){    
+                        
+                        str+="<tr><td>"+
+                        '<img src="../img/'+data.ProPic+'" width="75px" height="80px"></img>'
+                        +"</td><td>"+data.Name
+                        +"</td><td>"+data.Email
+                        +"</td><td>"+data.Phone
+                        +"</td><td>"+data.Address
+                        +"</td><td>"+data.DOB
+                        +"</td><td>"+data.BanStatus
+                        +"</td></tr>";
+                
+                        $("#tblBanUserInfo tbody").html(str);
+                }else{
+                    $("#serachErrorReports").html("User Not Found!");
+                }
+                }
+            }
+        });
+    }
+
+    else{
+
+        $.ajax({
+            url:"http://localhost:4747/api/banUserInfoByEmail/"+value+"/",
+            method:"GET",
+            complete:function(xmlHttp,status){
+                if(xmlHttp.status==200)
+                { 
+                    data=xmlHttp.responseJSON;
+                    if(data != null){    
+                        
+                        str+="<tr><td>"+
+                        '<img src="../img/'+data.ProPic+'" width="75px" height="80px"></img>'
+                        +"</td><td>"+data.Name
+                        +"</td><td>"+data.Email
+                        +"</td><td>"+data.Phone
+                        +"</td><td>"+data.Address
+                        +"</td><td>"+data.DOB
+                        +"</td><td>"+data.BanStatus
+                        +"</td></tr>";
+                
+                        $("#tblBanUserInfo tbody").html(str);
+                }else{
+                    $("#serachErrorReports").html("User Not Found!");
+                }
                     
-                    str+="<tr><td>"+
-                    '<img src="../img/'+data.ProPic+'" width="75px" height="80px"></img>'
-                    +"</td><td>"+data.Name
-                    +"</td><td>"+data.Email
-                    +"</td><td>"+data.Phone
-                    +"</td><td>"+data.Address
-                    +"</td><td>"+data.DOB
-                    +"</td><td>"+data.BanStatus
-                    +"</td></tr>";
-
-                    $("#tblBanUserInfo tbody").html(str);
-            }else{
-                $("#serachErrorReports").html("User Not Found!");
+                }
             }
+        });
+    }
 
-            }
-        }
-    });
+
 }
 
 $("#banUnbanBtn").click(function(){
     if (confirm('Aru sure to continue?')) {
-        $.ajax({
-            url:"http://localhost:4747/api/banUnbanUser/"+$("#searchFORban").val(),
-            method:"POST",
-            complete:function(xmlHttp,status){
-                if(xmlHttp.status==200)
-                {
-                    banUserInfoLoad($("#searchFORban").val());
-                    $("#BanUnbanMsg").html("User Ban/Unban Request Sucess!");
+
+        let check = parseInt($("#searchFORban").val());
+
+        if(!isNaN(check)){
+            $.ajax({
+                url:"http://localhost:4747/api/banUnbanUser/"+$("#searchFORban").val(),
+                method:"POST",
+                complete:function(xmlHttp,status){
+                    if(xmlHttp.status==200)
+                    {
+                        banUserInfoLoad($("#searchFORban").val());
+                        $("#BanUnbanMsg").html("User Ban/Unban Request Sucess!");
+                    }
+                        
+                    else
+                    {
+                        $("#BanUnbanMsg").html("Error occur!");
+                    }
                 }
-                    
-                else
-                {
-                    $("#BanUnbanMsg").html("Error occur!");
+            });
+        }else{
+            $.ajax({
+                url:"http://localhost:4747/api/banUnbanUserByEmail/"+$("#searchFORban").val()+"/",
+                method:"POST",
+                complete:function(xmlHttp,status){
+                    if(xmlHttp.status==200)
+                    {
+                        banUserInfoLoad($("#searchFORban").val());
+                        $("#BanUnbanMsg").html("User Ban/Unban Request Sucess!");
+                    }
+                        
+                    else
+                    {
+                        $("#BanUnbanMsg").html("Error occur!");
+                    }
                 }
-            }
-        });
+            });
+        }
+       
     
     } else {
         alert('Action canceled!');

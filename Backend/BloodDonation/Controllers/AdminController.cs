@@ -300,8 +300,18 @@ namespace BloodDonation.Controllers
             return Ok(data);
         }
 
+        [Route("api/allReportsByEmail/{email}"), HttpGet]
+        public IHttpActionResult allReportsByEmail(string email)
+        {
+
+            var data = context.Userinfos.Where(x => x.Email == email && x.Type == "Donner").FirstOrDefault<userinfo>();
+
+            var data2 = context.reports.Where(x => x.DonorID == data.userId).ToList();
+            return Ok(data2);
+        }
+
         [Route("api/banUserInfo/{id}"), HttpGet]
-        public IHttpActionResult banUserInfo(int id)
+        public IHttpActionResult banUserInfo([FromUri]int id)
         {
 
             var data = context.Userinfos.Where(x=> x.userId == id).FirstOrDefault<userinfo>();
@@ -309,12 +319,42 @@ namespace BloodDonation.Controllers
             return Ok(data);
         }
 
+        [Route("api/banUserInfoByEmail/{email}"), HttpGet]
+        public IHttpActionResult banUserInfoByEmail([FromUri]string email)
+        {
+
+            var data = context.Userinfos.Where(x => x.Email == email && x.Type == "Donner").FirstOrDefault<userinfo>();
+
+            return Ok(data);
+        }
+
+
         [Route("api/banUnbanUser/{id}"), HttpPost]
         public IHttpActionResult banUser(int id)
         {
             var data = context.Userinfos.Where(x => x.userId == id).FirstOrDefault<userinfo>();
 
             if (data.BanStatus=="yes")
+            {
+                data.BanStatus = "no";
+            }
+            else
+            {
+                data.BanStatus = "yes";
+            }
+
+            context.Entry(data).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+
+            return Ok(data);
+        }
+
+        [Route("api/banUnbanUserByEmail/{email}"), HttpPost]
+        public IHttpActionResult banUnbanUserByEmail([FromUri]string email)
+        {
+            var data = context.Userinfos.Where(x => x.Email == email).FirstOrDefault<userinfo>();
+
+            if (data.BanStatus == "yes")
             {
                 data.BanStatus = "no";
             }
