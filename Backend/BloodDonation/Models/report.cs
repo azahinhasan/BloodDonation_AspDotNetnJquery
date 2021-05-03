@@ -24,8 +24,13 @@ namespace BloodDonation.Models
         public int DonorID { get; set; }
         public int UserID { get; set; }
 
-        
-       // public virtual userinfo userInfo { get; set; }
+
+        // public virtual userinfo userInfo { get; set; }
         //public virtual userinfo userInfo1 { get; set; }
+
+        [NotMapped]
+        List<Link> links = new List<Link>();
+        [NotMapped]
+        public List<Link> Links { get { return links; } }
     }
 }

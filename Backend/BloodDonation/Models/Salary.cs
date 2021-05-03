@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
+using System.Xml.Serialization;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BloodDonation.Models
 {
@@ -24,6 +28,11 @@ namespace BloodDonation.Models
         public Nullable<int> Year { get; set; }
 
         public virtual userinfo userInfo { get; set; }
+
+        [NotMapped]
+        List<Link> links = new List<Link>();
+        [NotMapped]
+        public List<Link> Links { get { return links; } }
 
     }
 }

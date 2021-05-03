@@ -114,6 +114,7 @@
     <Compile Include="Models\DonationForSystem.cs" />
     <Compile Include="Models\donorRating.cs" />
     <Compile Include="Models\Link.cs" />
+    <Compile Include="Models\LinkesM.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\report.cs" />
     <Compile Include="Models\RequestBlood.cs" />

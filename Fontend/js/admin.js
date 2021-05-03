@@ -105,9 +105,6 @@ $(document).ready(function(){
             if(file[0].type == "image/jpeg" || file[0].type == "image/jpg" ||file[0].type == "image/png"){
                 $("#msgAddEmpplyee").html("");
                 
-        
-
-
                     $.ajax({
                         url:"http://localhost:4747/api/employee",
                         method:"POST",

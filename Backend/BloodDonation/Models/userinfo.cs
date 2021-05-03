@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using System.Xml.Serialization;
+//using BloodDonation.Models.Link;
 
 namespace BloodDonation.Models
 {
@@ -72,10 +73,16 @@ namespace BloodDonation.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [JsonIgnore, XmlIgnore]
         public virtual ICollection<Salary> Salaries { get; set; }
-      /*  [JsonIgnore, XmlIgnore]
-        public virtual userinfo userInfo1 { get; set; }
-        [JsonIgnore, XmlIgnore]
-        public virtual userinfo userInfo2 { get; set; }*/
+        /*  [JsonIgnore, XmlIgnore]
+          public virtual userinfo userInfo1 { get; set; }
+          [JsonIgnore, XmlIgnore]
+          public virtual userinfo userInfo2 { get; set; }*/
+
+
+        [NotMapped]
+        List<Link> links = new List<Link>();
+        [NotMapped]
+        public List<Link> Links { get { return links; } }
 
     }
 }

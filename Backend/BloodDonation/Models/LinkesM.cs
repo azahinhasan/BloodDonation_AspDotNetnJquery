@@ -5,12 +5,12 @@ using System.Web;
 
 namespace BloodDonation.Models
 {
-    public class Link
+    public class LinkesM
     {
+        
         public int id { get; set; }
         public string Url { get; set; }
         public string Method { get; set; }
         public string Relation { get; set; }
-
     }
 }

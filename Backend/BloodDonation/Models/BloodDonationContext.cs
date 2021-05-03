@@ -38,12 +38,10 @@ namespace BloodDonation.Models
         public DbSet<DonationForSystem> donationForSystems { set; get; }
         public DbSet<donorRating> donorRatings { set; get; }
         //public DbSet<FlagPost> flagPosts { set; get; }
-        public DbSet<Link> links { set; get; }
+       // public DbSet<Link> links { set; get; }
         public DbSet<Post> posts { set; get; }
         public DbSet<report> reports { set; get; }
         public DbSet<RequestBlood> requestBloods { set; get; }
-      
-
-
+        public object Links { get; internal set; }
     }
 }

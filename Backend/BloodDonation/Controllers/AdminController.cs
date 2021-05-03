@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using BloodDonation.Models;
+//using BloodDonation.Models.Link;
 using System.Web.Http.Cors;
 using System.Web.Http;
 
@@ -47,8 +48,21 @@ namespace BloodDonation.Controllers
         }
 
 
+        
 
+/*        [Route("api/HTTPReq"), HttpGet]
+        public IHttpActionResult HTTPReq()
 
+        {
+
+            var data = new List<userinfo>();
+           // data = context.Userinfos.Where(x => x.Type == "Admin1").ToList();
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/employee", Method = "GET", Relation = "GET ALL User INFO" });
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/employee/{id}", Method = "GET", Relation = "GET User INFO with ID" });
+
+            return Ok(data);
+        }
+*/
 
         [Route("api/employee"), HttpGet]
         public IHttpActionResult GetEmployeeList()
@@ -56,8 +70,11 @@ namespace BloodDonation.Controllers
 
         {
 
-            var data = context.Userinfos.Where(x => x.Type == "Admin" || x.Type == "Moderator").ToList();
-            //context.Links.Add(new Link() { Url = "https://localhost:44382/api/categories", Method = "POST", Relation = "Create a New Catogory" });
+            var data = new List<userinfo>();
+
+            data = context.Userinfos.Where(x => x.Type == "Admin" || x.Type == "Moderator").ToList();
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/employee", Method = "GET", Relation = "GET ALL User INFO" });
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/employee/{id}", Method = "GET", Relation = "GET User INFO with ID" });
 
             return Ok(data);
         }
@@ -114,8 +131,15 @@ namespace BloodDonation.Controllers
         public IHttpActionResult Getsalery()
         {
 
+            var data = new List<Salary>();
+            data = context.Salaries.ToList();
             //bool data = context.userInfoes.Any(x => x.Email == user.Email && x.Password == user.Password);
-            var data = context.Salaries.ToList();
+
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/salary", Method = "GET", Relation = "GET ALL User Salary INFO" });
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/salary/{id}", Method = "GET", Relation = "GET User Salary INFO with ID" });
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/salary/{id}/{month}/{year}/{add}}", Method = "POST", Relation = "UPDATE User Salary INFO(add mean the action yes/no)" });
+
+
 
             return Ok(data);
         }
@@ -310,7 +334,17 @@ namespace BloodDonation.Controllers
         public IHttpActionResult getAllReports()
         {
 
-            var data = context.reports.ToList();
+
+            var data = new List<report>();
+            data = context.reports.ToList();
+
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/allReports", Method = "GET", Relation = "GET ALL Reports " });
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/allReportsByEmail/{email}", Method = "GET", Relation = "GET ALL Reports by Email" });
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/banUserInfo/{id}", Method = "GET", Relation = "Get User Info from Reportlist by ID" });
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/banUserInfoByEmail/{email}", Method = "GET", Relation = "Get User Info from Reportlist by Email" });
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/banUnbanUser/{id}", Method = "POST", Relation = "UnBan User by ID" });
+            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/banUnbanUserByEmail/{email}", Method = "POST", Relation = "UnBan User by Email" });
+
             return Ok(data);
         }
 
