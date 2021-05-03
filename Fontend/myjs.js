@@ -62,7 +62,6 @@ $(document).ready(function(){
 
 $("#login").click(function(){
 
-   
     $.ajax({
     url:"http://localhost:4747/api/login",
     method:"POST",
@@ -72,35 +71,63 @@ $("#login").click(function(){
         "Password":$("#inputPassword").val()
     },
     complete:function(type){
-        console.log(type);
+        //console.log(type.responseJSON[0]);
 
-        if(type.responseJSON=="Admin" || type.responseJSON=="Moderator")
+
+        if(type.responseJSON[0]=="Admin" || type.responseJSON[0]=="Moderator")
         {
-            sessionStorage.setItem("Email", $("#inputEamil").val());
-            sessionStorage.setItem("Type",type.responseJSON);
-
-            console.log(sessionStorage.getItem("Email"));
-
-            window.location.href = "Admin/adminHome.html";
-
-
-            localStorage.setItem("Email", $("#inputEamil").val());
-            localStorage.setItem("TypeForAcess", "AdmNDmod");
-
-
-
-            // document.cookie = "Email="+$("#inputEamil").val();
-            // alert(document.cookie);
-            // console.log(Cookies.set('nameBloodDonationAZH', 3));
-            // console.log(Cookies.get('nameBloodDonationAZH'));
-           // window.location.href="Admin/adminHome.html";
+            if(type.responseJSON[1] != "yes"){
+                sessionStorage.setItem("Email", $("#inputEamil").val());
+                sessionStorage.setItem("Type",type.responseJSON);
+                console.log(sessionStorage.getItem("Email"));
+    
+                window.location.href = "Admin/adminHome.html";
+    
+                localStorage.setItem("Email", $("#inputEamil").val());
+                localStorage.setItem("TypeForAcess", "AdmNDmod");
+                localStorage.setItem("Type", type.responseJSON[0]);
+    
+    
+                // document.cookie = "Email="+$("#inputEamil").val();
+                // alert(document.cookie);
+                // console.log(Cookies.set('nameBloodDonationAZH', 3));
+                // console.log(Cookies.get('nameBloodDonationAZH'));
+               // window.location.href="Admin/adminHome.html";
+            }else{
+                $("#errorMsgLogin").html("Your account is disabled by Admin!");
+            }
+            
 
         }
         else if(type.responseJSON=="User")
         {
-            sessionStorage.setItem("Email", $("#inputEamil").val());
-            sessionStorage.setItem("Type",type.responseJSON);
-            //window.location.href = "Admin/adminHome.html";
+            if(type.responseJSON[1] != "yes"){
+                sessionStorage.setItem("Email", $("#inputEamil").val());
+                sessionStorage.setItem("Type",type.responseJSON);
+                //window.location.href = "Admin/adminHome.html";
+
+                localStorage.setItem("Email", $("#inputEamil").val());
+                localStorage.setItem("TypeForAcess", "AdmNDmod");
+                localStorage.setItem("Type", type.responseJSON[0]);
+            }else{
+                $("#errorMsgLogin").html("Your account is Banned!");
+            }
+
+        
+        }
+        else if(type.responseJSON=="Donner")
+        {
+            if(type.responseJSON[1] != "yes"){
+                sessionStorage.setItem("Email", $("#inputEamil").val());
+                sessionStorage.setItem("Type",type.responseJSON);
+                //window.location.href = "Admin/adminHome.html";
+
+                localStorage.setItem("Email", $("#inputEamil").val());
+                localStorage.setItem("TypeForAcess", "AdmNDmod");
+                localStorage.setItem("Type", type.responseJSON[0]);
+            }else{
+                $("#errorMsgLogin").html("Your account is Banned!");
+            }
         
         }
         else

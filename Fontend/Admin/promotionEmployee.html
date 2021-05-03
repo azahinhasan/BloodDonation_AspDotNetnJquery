@@ -57,9 +57,8 @@
 
 
 
-	
+	<div id="notAccessByModerator">
 	<div id="header"></div>
-	<form>
 		<h2>Search</h2>
 		<br/>
 		<input type="Email"  class="form-control" name="id" id="serachEamil" placeholder="ID">
@@ -70,7 +69,7 @@
         <br/>
         <div id="warningMsgChnageType" class="text-danger"></div>
         <br/>
-        <table border="1" id="prmotionTable">
+        <table border="1" id="prmotionTable" class="table">
             <tbody>
                 
             </tbody>
@@ -78,11 +77,15 @@
         <br/>
 
         <button id="changeTypeBtn" type="button" class="btn btn-warning">CHANGE TYPE</button>
+		<button id="disableAcountBtn" type="button" class="btn btn-outline-danger">DISABLE ACOUNT</button>
 	
 
 	</form>
-
-
+</div>
+	
+<div id="notAccessByModeratorError">
+	<p style="color: red; font-weight: bold;">You Dont have access for this Option!</p>
+</div>
 
 </body>
 </html>

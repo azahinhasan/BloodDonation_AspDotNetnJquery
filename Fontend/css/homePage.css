@@ -78,3 +78,12 @@ tr,td,th{
    body{
        text-align: center;
    }
+
+   #prmotionTable{
+       
+   }
+
+   body{
+       background-color: slategray;
+       color: white;
+   }

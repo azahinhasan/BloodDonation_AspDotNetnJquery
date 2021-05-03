@@ -6,7 +6,7 @@
 
     <meta charset="">
     <script type="text/javascript" src="../jquary.js"></script>
-    <script type="text/javascript" src="../js/admin.js"></script>
+    <script type="text/javascript" src="../js/donor.js"></script>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
@@ -51,61 +51,48 @@
 	</nav>
 
 
-
-	<h2>Reports List</h2>
+    <div id="DonorList">
+	<h2>Donor List</h2>
 	
-	<!-- <button id="loadbtn">Load Categories</button> -->
-	<br>
+	<br/>
+        <table border="1" id="tbDonorList" class="table">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Info</th>
+                </tr>		
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+	<br/>
 	
-	<br>
-	<table border="1" id="tblReportList" class="table">
-		<thead>
-			<tr>
-				<th>Report</th>
-				<th>DonorId</th>
-                <th>UserId</th>
-			</tr>		
-		</thead>
-		<tbody>
-			
-		</tbody>
-	</table>
 
+    <div id="loadInfoDonor">
+        <h2>Donor Info</h2>
+        <br>
 
-	<br/>
-
-	<hr>
-	<h3>Ban/Unban User</h3>
-	<p id="serachErrorReports" style="color: red; font-weight: bold;"></p>
-	<br/>
-	<input type="text" name="id" placeholder="DonorID/DonorEmail" id="searchFORban" class="form-control">
-	<br/>
-	<button id="searchFORbanBtn" class="btn btn-outline-primary">SEARCH</button>
-	<br/><br/>
-	<div id="banUserPart">
-		<table border="1" id="tblBanUserInfo" class="table">
-		<thead>
-			<tr>
-				
-				<th>ProPic</th>
-				<th>Name</th>
-                <th>Email</th>
-				<th>Phone</th>
-                <th>Address</th>
-				<th>DoB</th>
-                <th>BanStatus</th>
-			</tr>		
-		</thead>
-		<tbody>
-			
-		</tbody>
-	</table>
-	<br/>
-	<p id="BanUnbanMsg" style="color: green; font-weight: bold;"></p>
-	<br/>
-	<button id="banUnbanBtn" class="btn btn-outline-danger">BAN/UNBAN</button>
-	</div>
-
+        <table border="1" id="tblDonorInfoForVerify" class="table">
+            <thead>
+                <!-- <tr>		
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>DoB</th>
+                    <th>isVerify</th>
+                    <th>Action</th>
+                </tr>		 -->
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    
+    </div>
 
 </body>
 </html>

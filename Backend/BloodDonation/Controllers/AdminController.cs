@@ -50,7 +50,6 @@ namespace BloodDonation.Controllers
 
 
 
-
         [Route("api/employee"), HttpGet]
         public IHttpActionResult GetEmployeeList()
 
@@ -73,20 +72,35 @@ namespace BloodDonation.Controllers
             return Ok(data);
         }
 
-        [Route("api/employeeTypeChange/{id}"), HttpGet]
-        public IHttpActionResult TypeChangeEmployee([FromUri] int id)
+        [Route("api/employeeTypeChange/{id}/{actionType}"), HttpGet]
+        public IHttpActionResult TypeChangeEmployee([FromUri] int id, [FromUri] int actionType)
         {
 
 
             var data = context.Userinfos.Where(r => r.userId == id).FirstOrDefault<userinfo>();
-            if (data.Type == "Moderator")
+            if (actionType == 0)
             {
-                data.Type = "Admin";
+                if (data.Type == "Moderator")
+                {
+                    data.Type = "Admin";
+                }
+                else
+                {
+                    data.Type = "Moderator";
+                }
             }
-            else
+            else 
             {
-                data.Type = "Moderator";
+                if (data.BanStatus == "yes")
+                {
+                    data.BanStatus = "no";
+                }
+                else
+                {
+                    data.BanStatus = "yes";
+                }
             }
+
 
 
             context.Entry(data).State = System.Data.Entity.EntityState.Modified;
@@ -376,6 +390,55 @@ namespace BloodDonation.Controllers
             var data = context.contactUs.ToList();
 
             return Ok(data);
+        }
+
+        [Route("api/donotList"), HttpGet]
+        public IHttpActionResult showDonorList()
+        {
+            var data = context.Userinfos.Where(x => x.Type == "Donner").ToList();
+            return Ok(data);
+        }
+
+        [Route("api/donotList/{id}"), HttpGet]
+        public IHttpActionResult showDonorInfo([FromUri]int id)
+        {
+            var data = context.Userinfos.Where(x => x.Type == "Donner" && x.userId==id).ToList();
+            return Ok(data);
+        }
+
+        [Route("api/varifiedAcountDonor/{id}"), HttpPost]
+        public IHttpActionResult varifiedAcountDonor(int id)
+        {
+            var data = context.Userinfos.Where(x =>x.userId == id).FirstOrDefault<userinfo>();
+
+            if (data.isVerified == "yes")
+            {
+                data.isVerified = "no";
+            }
+            else
+            {
+                data.isVerified = "yes";
+            }
+
+            context.Entry(data).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+
+            return Ok("OK");
+        }
+
+
+        [Route("api/securityCheck/{email}/{type}"), HttpPost]
+        public IHttpActionResult securityCheck([FromUri] string email,[FromUri] string type)
+        {
+            var data = context.Userinfos.Where(x => x.Email == email && x.Type == type).FirstOrDefault<userinfo>();
+
+            if (data != null)
+            {
+                return Ok("OK");
+            }
+
+
+            return Ok("notOK");
         }
 
     }

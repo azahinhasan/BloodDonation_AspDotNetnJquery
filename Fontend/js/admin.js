@@ -8,7 +8,6 @@ $(document).ready(function(){
 
     $(function() {  //run with page load
         
-
         if(localStorage.getItem("Email") == null){
             //$("#errorMsgLogin").html("Have to Login Fast");
             window.location.href = "../index.html";
@@ -20,21 +19,47 @@ $(document).ready(function(){
         else{
             loadAllDatas();
         }
+
     });
 
+
+
     function loadAllDatas(){
-        console.log("AutoLoad");
-        employeeList();
-        loadReports();
-        contactUsLoad();
-        $("#paymentPart").hide();
-        $("#banUserPart").hide();
-    }
+
+        $.ajax({
+            url:"http://localhost:4747/api/securityCheck/"+localStorage.getItem("Email")+"/"+localStorage.getItem("Type"),
+            method:"POST",
+
+            complete:function(xmlHttp,status){
+                console.log(xmlHttp ,"security");
+                if(xmlHttp.responseJSON=="OK")
+                {
+                    
+
+
+                    
+            //after check value from DB 
+            if(localStorage.getItem("Type") == "Admin"){
+                $("#notAccessByModerator").show();
+                $("#notAccessByModeratorError").hide();
+            }else if(localStorage.getItem("Type") == "Moderator"){
+                $("#notAccessByModerator").hide();
+                $("#notAccessByModeratorError").show();
+            }
+            employeeList();
+            loadReports();
+            contactUsLoad();
+            $("#paymentPart").hide();
+            $("#banUserPart").hide();
+
+
+
 
 
     $("#LogOut").click(function(){
         localStorage.removeItem("Email");
         localStorage.removeItem("TypeForAcess");
+        localStorage.removeItem("Type");
         sessionStorage.clear();  
        // window.location.href = "../index.html";
     });
@@ -80,7 +105,7 @@ $(document).ready(function(){
             if(file[0].type == "image/jpeg" || file[0].type == "image/jpg" ||file[0].type == "image/png"){
                 $("#msgAddEmpplyee").html("");
                 
-         
+        
 
 
                     $.ajax({
@@ -125,7 +150,7 @@ $(document).ready(function(){
                                 sessionStorage.setItem("printPass",type.responseJSON);
                                 
                                 window.location.href = "printPage.html";
-                               
+                            
                             }
                         }
                     });
@@ -228,6 +253,7 @@ $(document).ready(function(){
                         +"</td><tr><td>Address: "+data.Address
                         +"</td></tr><td>DOB: "+data.DOB
                         +"</td><tr><td>Type: "+data.Type
+                        +"</td><tr><td>DisableStatus: "+data.BanStatus
                         +"</td></tr>";
                     }else{
                         str+="<tr><td>Data Not Found!"+"</td></tr>";
@@ -249,7 +275,7 @@ $(document).ready(function(){
     $("#changeTypeBtn").click(function(){
     
         $.ajax({
-        url:"http://localhost:4747/api/employeeTypeChange/"+sessionStorage.getItem("actionOFemployee"),
+        url:"http://localhost:4747/api/employeeTypeChange/"+sessionStorage.getItem("actionOFemployee")+"/0",
         method:"GET",
         headers:"Content-Type:application/json",
         // data:{
@@ -270,6 +296,7 @@ $(document).ready(function(){
                         +"</td><tr><td>Address: "+data.Address
                         +"</td></tr><td>DOB: "+data.DOB
                         +"</td><tr><td>Type: "+data.Type
+                        +"</td><tr><td>DisableStatus: "+data.BanStatus
                         +"</td></tr>";
                     }else{
                         str+="<tr><td>Data Not Found!"+"</td></tr>";
@@ -283,13 +310,53 @@ $(document).ready(function(){
             else
             {
                 $("#msg").html(xmlHttp.status+":"+xmlHttp.statusText);
+            }
+        }
+    });
+    });
+
+
+    $("#disableAcountBtn").click(function(){
+    
+        $.ajax({
+        url:"http://localhost:4747/api/employeeTypeChange/"+sessionStorage.getItem("actionOFemployee")+"/1",
+        method:"GET",
+        headers:"Content-Type:application/json",
+        complete:function(xmlHttp,status){
+            if(xmlHttp.status==200)
+            {
+                var str='';
+                var data=xmlHttp.responseJSON;
+
+                    if(data.Name != null){
+                        sessionStorage.setItem("actionOFemployee", data.userId);
+                        str+="<tr><td>Name: "
+                        +data.Name
+                        +"</td><tr><td>Phone: "+data.Phone
+                        +"</td></tr><td>Email: "+data.Email
+                        +"</td><tr><td>Address: "+data.Address
+                        +"</td></tr><td>DOB: "+data.DOB
+                        +"</td><tr><td>Type: "+data.Type
+                        +"</td><tr><td>DisableStatus: "+data.BanStatus
+                        +"</td></tr>";
+                    }else{
+                        str+="<tr><td>Data Not Found!"+"</td></tr>";
+                    }
+
+            
+                $("#prmotionTable tbody").html(str);
+
+                $("#warningMsgChnageType").html("DisableStatus Chnaged to "+data.BanStatus);
+            }
+            else
+            {
+                $("#msg").html(xmlHttp.status+":"+xmlHttp.statusText);
 
 
             }
         }
     });
     });
-
 
 
     $("#loadSalaryBtn").click(function(){
@@ -453,21 +520,18 @@ $(document).ready(function(){
         if (confirm('Do You want to Continue?')) {
             payMentDone("yes");
         }
-       
-      
     });
 
     $("#cenclePayBtn").click(function(){
         if (confirm('Do You want to Continue?')) {
             payMentDone("no");
         }
-       
-      
+    
     });
 
 
     function loadReports(){
-       
+
         $.ajax({
             url:"http://localhost:4747/api/allReports",
             method:"GET",
@@ -550,7 +614,6 @@ $(document).ready(function(){
 
     }
     else{
-
 
         $.ajax({
             url:"http://localhost:4747/api/allReportsByEmail/"+$("#searchFORban").val()+"/",
@@ -701,19 +764,18 @@ $("#banUnbanBtn").click(function(){
                 }
             });
         }
-       
+    
     
     } else {
         alert('Action canceled!');
     }
 
-      
+    
     });
 
 
-    function myFunction(){
-        console.log("hello");
-    }
+    
+
     function contactUsLoad(){
         $.ajax({
             url:"http://localhost:4747/api/contactUsList",
@@ -732,8 +794,10 @@ $("#banUnbanBtn").click(function(){
                             +"</td><td>"+data[i].Massage
                             +"</td><td>"+data[i].Type
                             +"</td><td>"+'<a href="mailto:'+data[i].Email+'" target="_blank">Replay</a>'
-                            //+"</td><td>"+'<button click="'+myFunction()+'">Click</button>'
+                           // +"</td><td>"+"<button id='demoBtn'>Clc</button>"
+                           // +'</td><td><button onclick="getById(this)" class="btn postUpdateBtn btn-info" value="'+data[i].Name+'">Update</button>'
                             +"</td></tr>";
+                            
                         }
                     
                         $("#tblContactUsList tbody").html(str);
@@ -745,6 +809,9 @@ $("#banUnbanBtn").click(function(){
             }
         });
     }
+
+
+
 
     $("#filterContactUsBtn").click(function(){
         $.ajax({
@@ -771,19 +838,34 @@ $("#banUnbanBtn").click(function(){
                     
                         $("#tblContactUsList tbody").html(str);
                 }
-    
                 }
             }
         });
     });
 
 
+    }
+    else
+    {
+        localStorage.removeItem("Email");
+        localStorage.removeItem("TypeForAcess");
+        localStorage.removeItem("Type");
+        sessionStorage.clear();  
+        window.location.href = "../index.html";
+    }
+    }
+    });
 
 
-
-
-
-
-
+}
 
 });
+
+
+
+
+function getById(element) {
+
+    console.log(element.value);
+    return true;
+}

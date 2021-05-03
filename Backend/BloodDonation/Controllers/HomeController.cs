@@ -12,7 +12,6 @@ namespace BloodDonation.Controllers
     {
         BloodDonationContext context = new BloodDonationContext();
 
-
         [Route("api/home")]
         public IHttpActionResult Get()
         {
@@ -29,16 +28,20 @@ namespace BloodDonation.Controllers
         public IHttpActionResult login(userinfo user)
         {
             var type = "none";
+            
 
             //bool data = context.userInfoes.Any(x => x.Email == user.Email && x.Password == user.Password);
             var data = context.Userinfos.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault<userinfo>();
+   
+
 
             if (data != null)
             {
+
                 type = data.Type;
+                string[] result = { data.Type, data.BanStatus };
 
-                return Json(type);
-
+                return Json(result);
 
             }
 
@@ -60,6 +63,7 @@ namespace BloodDonation.Controllers
         public IHttpActionResult GetContactUs()
         {
             return Ok(context.contactUs.ToList());
+            //return Ok(context.contactUs.ToList());
         }
 
 
