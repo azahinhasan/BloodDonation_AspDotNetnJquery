@@ -683,6 +683,7 @@ function banUserInfoLoad(value){
                 
                         $("#tblBanUserInfo tbody").html(str);
                 }else{
+                    $("#banUserPart").hide();
                     $("#serachErrorReports").html("User Not Found!");
                 }
                 }

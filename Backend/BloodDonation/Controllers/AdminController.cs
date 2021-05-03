@@ -328,7 +328,7 @@ namespace BloodDonation.Controllers
         public IHttpActionResult banUserInfo([FromUri]int id)
         {
 
-            var data = context.Userinfos.Where(x=> x.userId == id).FirstOrDefault<userinfo>();
+            var data = context.Userinfos.Where(x=> x.userId == id && x.Type == "Donner").FirstOrDefault<userinfo>();
 
             return Ok(data);
         }
