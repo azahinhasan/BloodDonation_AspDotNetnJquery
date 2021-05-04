@@ -30,23 +30,40 @@ tr,td,th{
     border: 1px solid black;
     margin-left: auto;
     margin-right: auto;
-    font-size: 20px;
+    font-size: 25px;
     text-align: center;
 
-    width: 450px;
+    width: 650px;
 }
 
 .emailNDpass{
     background-color: cornflowerblue;
+    color: white;
+}
+
+.emailNDpass span{
+    margin: 0 15px;
+}
+.PrintTable{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+
 }
 
 
 @media print {
-    .noPrint{
-      display:none;
+    .emailNDpass{
+        background-color: cornflowerblue !important;
+        color: white;
+        -webkit-print-color-adjust: exact; 
 
     }
+    .noPrint{
+      display:none;
+    }
   }
+
   h1{
     color:#f6f6;
   }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using BloodDonation.Models;
-//using BloodDonation.Models.Link;
 using System.Web.Http.Cors;
 using System.Web.Http;
+using BloodDonation.Attributes;
+using System.Net;
+using System.Web;
+using System.Threading;
+using System.IO;
 
 namespace BloodDonation.Controllers
 {
@@ -23,7 +26,31 @@ namespace BloodDonation.Controllers
             var type = "none";
             bool data = context.Userinfos.Any(x => x.Email == info.Email);
 
-            if (!data)
+
+/*
+            var httpPostedFile = HttpContext.Current.Request.Files[info.ProPic];
+            var extension = System.IO.Path.GetExtension(httpPostedFile.FileName);
+            if (httpPostedFile != null)
+            {
+                // Validate the uploaded image(optional)
+
+
+                // Get the complete file path
+                var fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/Content"));
+
+                //httpPostedFile.FileName
+                // Save the uploaded file to "UploadedFiles" folder
+                httpPostedFile.SaveAs(fileSavePath);
+            }
+*/
+
+
+
+
+
+
+
+                if (!data)
             {
                 info.Password = rand.Next(300, 901).ToString() + "azhe";
                 info.darkMood = "no";
@@ -48,33 +75,32 @@ namespace BloodDonation.Controllers
         }
 
 
-        
 
-/*        [Route("api/HTTPReq"), HttpGet]
-        public IHttpActionResult HTTPReq()
 
-        {
+        /*        [Route("api/HTTPReq"), HttpGet]
+                public IHttpActionResult HTTPReq()
 
-            var data = new List<userinfo>();
-           // data = context.Userinfos.Where(x => x.Type == "Admin1").ToList();
-            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/employee", Method = "GET", Relation = "GET ALL User INFO" });
-            data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/employee/{id}", Method = "GET", Relation = "GET User INFO with ID" });
+                {
 
-            return Ok(data);
-        }
-*/
+                    var data = new List<userinfo>();
+                   // data = context.Userinfos.Where(x => x.Type == "Admin1").ToList();
+                    data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/employee", Method = "GET", Relation = "GET ALL User INFO" });
+                    data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/employee/{id}", Method = "GET", Relation = "GET User INFO with ID" });
 
-        [Route("api/employee"), HttpGet]
+                    return Ok(data);
+                }
+        */
+
+        [Route("api/employee"), HttpGet,Auth]
+        //[Route("api/employee"), HttpGet]
         public IHttpActionResult GetEmployeeList()
-
-
         {
-
             var data = new List<userinfo>();
 
             data = context.Userinfos.Where(x => x.Type == "Admin" || x.Type == "Moderator").ToList();
             data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/employee", Method = "GET", Relation = "GET ALL User INFO" });
             data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/employee/{id}", Method = "GET", Relation = "GET User INFO with ID" });
+
 
             return Ok(data);
         }
@@ -127,7 +153,7 @@ namespace BloodDonation.Controllers
         }
 
 
-        [Route("api/salary"), HttpGet]
+        [Route("api/salary"), HttpGet, AuthAdmin]
         public IHttpActionResult Getsalery()
         {
 

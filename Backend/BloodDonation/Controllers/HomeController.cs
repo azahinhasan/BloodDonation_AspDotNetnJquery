@@ -5,6 +5,9 @@ using System.Web;
 using BloodDonation.Models;
 using System.Web.Http.Cors;
 using System.Web.Http;
+using BloodDonation.Attributes;
+using System.Threading;
+
 
 namespace BloodDonation.Controllers
 {
@@ -24,16 +27,18 @@ namespace BloodDonation.Controllers
         }
 
 
-        [Route("api/login"), HttpPost]
-        public IHttpActionResult login(userinfo user)
+        [Route("api/login"), HttpPost,AuthLogin]
+        //public IHttpActionResult login(userinfo user)
+        public IHttpActionResult login()
         {
             var type = "none";
-            
+
 
             //bool data = context.userInfoes.Any(x => x.Email == user.Email && x.Password == user.Password);
-            var data = context.Userinfos.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault<userinfo>();
-   
+            // var data = context.Userinfos.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault<userinfo>();
 
+            var data = context.Userinfos.Where(x => x.Email == Thread.CurrentPrincipal.Identity.Name).FirstOrDefault<userinfo>();
+            //var data = context.Userinfos.Where(x => x.userId == 2).FirstOrDefault<userinfo>();
 
             if (data != null)
             {

@@ -99,7 +99,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Auth\Auth.cs" />
+    <Compile Include="Attributes\Auth.cs" />
+    <Compile Include="Attributes\AuthAdmin.cs" />
+    <Compile Include="Attributes\AuthLogin.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">

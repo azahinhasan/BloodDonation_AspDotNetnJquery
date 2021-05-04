@@ -85,7 +85,7 @@ $(document).ready(function(){
     
         var validation = false;
         var file = $("#addEmployeeProPic").get(0).files;
-
+        var data = new FormData();
 
         if($("#addEmployeeName").val() != "" && $("#addEmployeeEmail").val() != ""
         && $("#addEmployeePhone").val() != "" && $("#addEmployeeAddress").val() != ""
@@ -93,9 +93,14 @@ $(document).ready(function(){
         && $("#addEmployeeBloodGroup").val() != "" && $("#addEmployeeSalary").val() != ""){
             validation = true;
 
+            if(parseInt($("#addEmployeeSalary").val()) < 500){
+                validation = false;
+                console.log($("#addEmployeeSalary").val());
+                $("#msgAddEmpplyee").html("Salary must be more then 499");
+            }
+            
 
         }else{
-            console.log('HH')
             validation = false;
             $("#msgAddEmpplyee").html("Please fill up all text box");
         }
@@ -105,6 +110,10 @@ $(document).ready(function(){
             if(file[0].type == "image/jpeg" || file[0].type == "image/jpg" ||file[0].type == "image/png"){
                 $("#msgAddEmpplyee").html("");
                 
+
+
+                   // data.append("UploadedImage", file[0]);
+
                     $.ajax({
                         url:"http://localhost:4747/api/employee",
                         method:"POST",
@@ -119,6 +128,7 @@ $(document).ready(function(){
                             "Salary":$("#addEmployeeSalary").val(),
                             "BloodGroup":$("#addEmployeeBloodGroup").val(),
                             "ProPic":file[0].name
+                            //"ProPic":file[0]
 
 
                         },
@@ -189,9 +199,9 @@ $(document).ready(function(){
         $.ajax({
         url:"http://localhost:4747/api/employee",
         method:"GET",
-        // headers:{
-        //     "Authorization":"Basic "+btoa("admin:123")
-        // },
+        headers:{
+            "Authorization":"Basic "+btoa(localStorage.getItem("Email")+":"+localStorage.getItem("Type"))
+        },
         complete:function(xmlHttp,status){
             if(xmlHttp.status==200)
             {
@@ -361,9 +371,9 @@ $(document).ready(function(){
         $.ajax({
         url:"http://localhost:4747/api/salary",
         method:"GET",
-        // headers:{
-        //     "Authorization":"Basic "+btoa("admin:123")
-        // },
+        headers:{
+            "Authorization":"Basic "+btoa(localStorage.getItem("Email")+":"+localStorage.getItem("Type"))
+        },
         complete:function(xmlHttp,status){
             if(xmlHttp.status==200)
             {
@@ -378,6 +388,7 @@ $(document).ready(function(){
                     str+="<tr><td>"
                     +data[i].userInfo.userId
                     +"</td><td>"+data[i].userInfo.Name
+                    +"</td><td>"+data[i].userInfo.Salary
                     +"</td><td>"+data[i].January
                     +"</td><td>"+data[i].February
                     +"</td><td>"+data[i].March
@@ -427,6 +438,7 @@ $(document).ready(function(){
                         str+="<tr><td>"
                         +data[i].userInfo.userId
                         +"</td><td>"+data[i].userInfo.Name
+                        +"</td><td>"+data[i].userInfo.Salary
                         +"</td><td>"+data[i].January
                         +"</td><td>"+data[i].February
                         +"</td><td>"+data[i].March
@@ -479,6 +491,7 @@ $(document).ready(function(){
                             str+="<tr><td>"
                             +data.userInfo.userId
                             +"</td><td>"+data.userInfo.Name
+                            +"</td><td>"+data.userInfo.Salary
                             +"</td><td>"+data.January
                             +"</td><td>"+data.February
                             +"</td><td>"+data.March

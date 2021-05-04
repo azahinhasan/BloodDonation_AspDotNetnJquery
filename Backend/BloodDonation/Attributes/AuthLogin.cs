@@ -9,11 +9,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Security.Principal;
+using BloodDonation.Models;
 
-
-namespace BloodDonation.Auth
+namespace BloodDonation.Attributes
 {
-    public class Auth : AuthorizationFilterAttribute
+    public class AuthLogin : AuthorizationFilterAttribute
     {
         // go to postman in Headers to disable authorizaton option
         public override void OnAuthorization(HttpActionContext actionContext)
@@ -29,11 +29,15 @@ namespace BloodDonation.Auth
                 string encoded = actionContext.Request.Headers.Authorization.Parameter;
                 string decoded = Encoding.UTF8.GetString(Convert.FromBase64String(encoded));
                 string[] splittedText = decoded.Split(new char[] { ':' });
-                string username = splittedText[0];
-                string password = splittedText[1];
-                if (username == "admin" && password == "123")
+                string email = splittedText[0];
+                string pass = splittedText[1];
+
+                BloodDonationContext context = new BloodDonationContext();
+                var data = context.Userinfos.Where(x => x.Email == email && x.Password == pass).FirstOrDefault<userinfo>();
+
+                if (data != null)
                 {
-                    Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null); //in null position ther will user Role
+                    Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(email,data.Type), null);
                 }
                 else
                 {

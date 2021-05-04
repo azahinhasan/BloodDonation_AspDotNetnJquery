@@ -65,11 +65,13 @@ $("#login").click(function(){
     $.ajax({
     url:"http://localhost:4747/api/login",
     method:"POST",
-    headers:"Content-Type:application/json",
-    data:{
-        "Email":$("#inputEamil").val(),
-        "Password":$("#inputPassword").val()
+    headers:{
+        "Authorization":"Basic "+btoa($("#inputEamil").val()+":"+$("#inputPassword").val())
     },
+    // data:{
+    //     "Email":$("#inputEamil").val(),
+    //     "Password":$("#inputPassword").val()
+    // },
     complete:function(type){
         //console.log(type.responseJSON[0]);
 
