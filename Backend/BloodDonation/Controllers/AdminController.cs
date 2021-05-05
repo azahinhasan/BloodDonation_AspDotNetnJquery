@@ -46,11 +46,7 @@ namespace BloodDonation.Controllers
 
 
 
-
-
-
-
-                if (!data)
+            if (!data)
             {
                 info.Password = rand.Next(300, 901).ToString() + "azhe";
                 info.darkMood = "no";
@@ -164,7 +160,6 @@ namespace BloodDonation.Controllers
             data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/salary", Method = "GET", Relation = "GET ALL User Salary INFO" });
             data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/salary/{id}", Method = "GET", Relation = "GET User Salary INFO with ID" });
             data.FirstOrDefault().Links.Add(new Link() { Url = "http://localhost:4747/api/salary/{id}/{month}/{year}/{add}}", Method = "POST", Relation = "UPDATE User Salary INFO(add mean the action yes/no)" });
-
 
 
             return Ok(data);

@@ -35,7 +35,7 @@ namespace BloodDonation.Controllers
 
 
             //bool data = context.userInfoes.Any(x => x.Email == user.Email && x.Password == user.Password);
-            // var data = context.Userinfos.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault<userinfo>();
+            //var data = context.Userinfos.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefault<userinfo>();
 
             var data = context.Userinfos.Where(x => x.Email == Thread.CurrentPrincipal.Identity.Name).FirstOrDefault<userinfo>();
             //var data = context.Userinfos.Where(x => x.userId == 2).FirstOrDefault<userinfo>();

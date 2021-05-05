@@ -211,6 +211,7 @@ $(document).ready(function(){
                     str+="<tr><td>"+
                     //'<img src="../../Backend/BloodDonation/Content/img/'+data[i].ProPic+'" width="75px" height="80px"></img>'
                     '<img src="../img/'+data[i].ProPic+'" width="75px" height="80px"></img>'
+                    +"</td><td>"+data[i].userId
                     +"</td><td>"+data[i].Name
                     +"</td><td>"+data[i].Phone
                     +"</td><td>"+data[i].Email

@@ -27,6 +27,7 @@ namespace BloodDonation.Models
 
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+
         public int userId { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
